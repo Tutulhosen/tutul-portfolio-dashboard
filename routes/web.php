@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AboutMeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //logout
+    Route::get('custom-logout', [DashboardController::class, 'custom_logout'])->name('custom.logout');
+
+    //about me part
+    Route::get('/about/create', [AboutMeController::class, 'create'])->name('about.create');
+    Route::post('/about/store', [AboutMeController::class, 'store'])->name('about.store');
+    Route::get('/about', [AboutMeController::class, 'show'])->name('about.show');
+
 });
 
 require __DIR__.'/auth.php';

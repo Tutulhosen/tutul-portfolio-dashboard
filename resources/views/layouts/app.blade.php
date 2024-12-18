@@ -1,36 +1,88 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="en">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('assets/style.css')}}">
+    <!-- Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+    <!-- Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+<body>
+    <!-- Header -->
+    @include('layouts.header')
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <!-- Sidebar -->
+    @include('layouts.sidebar')
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+    <!-- Main Content -->
+    @section('main-content')
+        
+    @show
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        @if (session('success'))
+            toastr.success("{{ session('success') }}");
+        @elseif (session('error'))
+            toastr.error("{{ session('error') }}");
+        @endif
+    </script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right", // Change position as needed
+            "timeOut": "5000",
+        };
+    </script>
+    
+    
+    <script>
+        // Ensure sidebar toggle works on mobile
+        const sidebar = document.getElementById('sidebar');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const desktopToggle = document.getElementById('desktopToggle');
+        const mobileToggleSidebar = document.getElementById('mobileToggleSidebar');
+
+        mobileToggle.addEventListener('click', function () {
+            console.log('Mobile toggle clicked'); // Debugging line
+            sidebar.classList.toggle('visible');
+        });
+
+        desktopToggle.addEventListener('click', function () {
+            console.log('Desktop toggle clicked'); // Debugging line
+            sidebar.classList.toggle('collapsed');
+        });
+
+        mobileToggleSidebar.addEventListener('click', function () {
+            console.log('Mobile sidebar toggle clicked'); // Debugging line
+            sidebar.classList.toggle('visible');
+        });
+    </script>
+
+    <script>
+        // Initialize CKEditor with custom height
+        ClassicEditor
+            .create(document.querySelector('textarea'))
+            .then(editor => {
+                console.log('Editor was initialized', editor);
+
+                // Optional: Add dynamic styles if needed
+                editor.ui.view.editable.element.style.height = '250px';
+            })
+            .catch(error => {
+                console.error('Error during initialization of the editor', error);
+            });
+    </script>
+</body>
+
 </html>

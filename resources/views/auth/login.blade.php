@@ -129,14 +129,14 @@
                 </div>
 
                 <!-- Additional Links -->
-                <div class="text-center">
+                {{-- <div class="text-center">
                     @if (Route::has('register'))
                         <p>Don't have an account? <a href="{{ route('register') }}">Sign up</a></p>
                     @endif
                     @if (Route::has('password.request'))
                         <p><a href="{{ route('password.request') }}">Forgot Password?</a></p>
                     @endif
-                </div>
+                </div> --}}
             </form>
         </div>
     </div>
