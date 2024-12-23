@@ -12,7 +12,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{route('about.create')}}">
+            <a class="nav-link" href="{{route('about.show')}}">
                 <i class="fas fa-user"></i>
                 <span>About Me</span>
             </a>

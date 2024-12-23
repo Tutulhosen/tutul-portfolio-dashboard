@@ -16,23 +16,71 @@ class AboutMeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content' => 'required|string',
+            'content' => 'required|string|max:1000',
         ]);
 
-        AboutMe::create([
-            'content' => $request->content,
+        $about = new AboutMe;
+        $about->content = $request->input('content');
+        $about->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'About Me section saved successfully.',
+            'redirect' => route('about.show') 
         ]);
-        // Set the success message in the session
-        return redirect()->back()->with('success', 'About Me section updated successfully!');
-       
     }
+
+
 
 
 
     public function show()
     {
-        $aboutMe = AboutMe::latest()->first(); 
+        $aboutMe = AboutMe::latest()->paginate(10); 
         return view('about.show', compact('aboutMe'));
     }
+
+    public function updateStatus($id)
+    {
+        $task = AboutMe::findOrFail($id);
+
+     
+        $task->status = $task->status == 1 ? 0 : 1;
+        $task->save();
+
+        return response()->json(['status' => $task->status]);
+    }
+
+    public function edit($id)
+    {
+      
+        $aboutMe = AboutMe::findOrFail($id);
+        
+   
+        return view('about.edit', compact('aboutMe'));
+    }
+
+
+    public function update(Request $request, $id)
+    {
+       
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+
+        $aboutMe = AboutMe::findOrFail($id);
+        $aboutMe->content = $request->content;
+        $aboutMe->save();
+
+ 
+        return response()->json([
+            'success' => true,
+            'message' => 'About Me updated successfully.',
+            'redirect' => route('about.show'), 
+        ]);
+    }
+
+
 
 }

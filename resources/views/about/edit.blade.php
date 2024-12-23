@@ -3,39 +3,30 @@
 @section('main-content')
     <main class="main-content">
         <div class="container">
-            <h1>Create About Me</h1>
+            <h1>Edit About Me</h1>
 
-            <form id="about-me-form" method="POST">
+            <!-- The form to edit content -->
+            <form id="about-me-form" method="POST" action="{{ route('about.update', $aboutMe->id) }}">
                 @csrf
                 <div class="form-group">
                     <label for="content">About Me</label>
-                    <textarea name="content" id="content"></textarea>
+                    <textarea name="content" id="content" class="form-control">{{ old('content', $aboutMe->content) }}</textarea>
                 </div><br>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
-            
         </div>
     </main>
-
-
 @endsection
 
 @section('scripts')
     <script>
         document.getElementById('about-me-form').addEventListener('submit', function (e) {
-            e.preventDefault(); 
+            e.preventDefault(); // Prevent the default form submission
 
             const form = this;
             const formData = new FormData(form);
-            const content = document.getElementById('content').value;
-            
-            // Validate content
-            if (!content.trim()) {
-                toastr.error('The About Me section cannot be empty.');
-                return;
-            }
 
-            fetch("{{ route('about.store') }}", {
+            fetch("{{ route('about.update', $aboutMe->id) }}", {
                 method: "POST",
                 headers: {
                     "X-CSRF-TOKEN": "{{ csrf_token() }}",
@@ -46,16 +37,12 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    toastr.success(data.message); 
-                    form.reset();
-
-             
+                    toastr.success(data.message);
+                    
+                    // Set a 2-second delay before redirecting
                     setTimeout(function () {
-                      
-                        if (data.redirect) {
-                            window.location.href = data.redirect;  
-                        }
-                    }, 2000); 
+                        window.location.href = data.redirect;
+                    }, 2000); // 2 seconds
                 } else {
                     toastr.error(data.message || 'Something went wrong.');
                 }
@@ -65,7 +52,5 @@
                 console.error('Error:', error);
             });
         });
-
     </script>
-
 @endsection

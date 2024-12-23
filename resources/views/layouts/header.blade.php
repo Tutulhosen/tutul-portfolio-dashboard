@@ -13,7 +13,7 @@
     <div class="profile-dropdown">
         <div class="dropdown">
             <button class="btn btn-light dropdown-toggle" type="button" id="profileMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                Profile
+                {{Auth::user()->name}}
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileMenu">
                 <li><a class="dropdown-item" href="{{route('profile.edit')}}">Settings</a></li>

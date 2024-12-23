@@ -33,9 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::get('custom-logout', [DashboardController::class, 'custom_logout'])->name('custom.logout');
 
     //about me part
-    Route::get('/about/create', [AboutMeController::class, 'create'])->name('about.create');
-    Route::post('/about/store', [AboutMeController::class, 'store'])->name('about.store');
-    Route::get('/about', [AboutMeController::class, 'show'])->name('about.show');
+    Route::prefix('about')->name('about.')->group(function () {
+        Route::get('/create', [AboutMeController::class, 'create'])->name('create');
+        Route::post('/store', [AboutMeController::class, 'store'])->name('store');
+        Route::get('/', [AboutMeController::class, 'show'])->name('show');
+        Route::post('/status/{id}', [AboutMeController::class, 'updateStatus'])->name('status');
+        Route::get('/edit/{id}', [AboutMeController::class, 'edit'])->name('edit');
+        Route::post('/update/{id}', [AboutMeController::class, 'update'])->name('update');
+
+    });
+    
+
 
 });
 
