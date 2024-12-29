@@ -18,21 +18,21 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{route('project.show')}}">
                 <i class="fas fa-briefcase"></i>
                 <span>Projects</span>
             </a>
         </li>
         <li class="nav-item">
            
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{route('skill.show')}}">
                 <i class="fas fa-laptop-code"></i>
                 <span>Skills</span>
             </a>
           
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{route('contact.show')}}">
                 <i class="fas fa-envelope"></i>
                 <span>Contact</span>
             </a>

@@ -81,6 +81,19 @@ class AboutMeController extends Controller
         ]);
     }
 
+    public function destroy($id)
+    {
+        $task = AboutMe::findOrFail($id);
+        $task->delete();
+
+        return response()->json([
+            'success' => true,
+            'redirect_url' => route('about.show') 
+        ]);
+    }
+
+
+
 
 
 }
