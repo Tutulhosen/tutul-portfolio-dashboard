@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\AboutMe;
 use App\Models\Skill;
+use App\Models\AboutMe;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class FrontendDataController extends Controller
 {
@@ -51,6 +52,30 @@ class FrontendDataController extends Controller
             'success' => false,
             'message' => 'Skill data not found.',
         ], 404);
+    }
+
+    //get project data
+    public function project(){
+        $projects = Project::where('status', 1)->latest()->get();
+
+        if ($projects->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No projects found.',
+            ], 404);
+        }
+
+        $projects->map(function ($project) {
+            if ($project->image) {
+                $project->image = url('storage/' . $project->image);
+            }
+            return $project;
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $projects,
+        ]);
     }
 
 

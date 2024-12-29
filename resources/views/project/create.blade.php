@@ -29,8 +29,8 @@
                 <div class="form-group mb-3">
                     <label for="status" class="form-label">Project Status</label>
                     <select name="status" id="status" class="form-select">
-                        <option value="active">Active</option>
-                        <option value="inactive" selected>Inactive</option>
+                        <option value="1">Active</option>
+                        <option value="0" selected>Inactive</option>
                     </select>
                 </div>
                 
@@ -58,7 +58,13 @@
                 <!-- Project Link -->
                 <div class="form-group mb-3">
                     <label for="link" class="form-label">Project Link</label>
-                    <input type="url" name="link" id="link" class="form-control" placeholder="Enter project link (optional)">
+                    <input type="url" name="link" id="link" class="form-control" placeholder="Enter project link">
+                </div>
+
+                <!-- Github Link -->
+                <div class="form-group mb-3">
+                    <label for="link" class="form-label">GitHub Link</label>
+                    <input type="url" name="github_link" id="github_link" class="form-control" placeholder="Enter GitHub link ">
                 </div>
                 
                 <!-- Submit Button -->

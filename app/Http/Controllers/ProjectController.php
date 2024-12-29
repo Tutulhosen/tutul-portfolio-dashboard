@@ -32,6 +32,7 @@ class ProjectController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'link' => 'nullable|url',
+            'github_link' => 'nullable|url',
         ]);
 
         try {
@@ -42,6 +43,7 @@ class ProjectController extends Controller
             $project->start_date = $request->start_date;
             $project->end_date = $request->end_date;
             $project->link = $request->link;
+            $project->github_link = $request->github_link;
 
             if ($request->hasFile('image')) {
                 $imagePath = $request->file('image')->store('projects', 'public');
@@ -72,7 +74,7 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::findOrFail($id); 
-        return view('about.edit', compact('project'));
+        return view('project.edit', compact('project'));
     }
 
     //update
@@ -86,6 +88,7 @@ class ProjectController extends Controller
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'link' => 'nullable|url',
+            'github_link' => 'nullable|url',
         ]);
 
         try {
@@ -96,6 +99,7 @@ class ProjectController extends Controller
             $project->start_date = $request->start_date;
             $project->end_date = $request->end_date;
             $project->link = $request->link;
+            $project->github_link = $request->github_link;
 
             if ($request->hasFile('image')) {
                 

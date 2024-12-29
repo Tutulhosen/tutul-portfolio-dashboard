@@ -6,3 +6,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/about', [FrontendDataController::class, 'about']);
 Route::get('/skill', [FrontendDataController::class, 'skill']);
+Route::get('/project', [FrontendDataController::class, 'project']);
