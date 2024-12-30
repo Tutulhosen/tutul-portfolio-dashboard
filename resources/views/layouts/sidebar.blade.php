@@ -37,5 +37,11 @@
                 <span>Contact</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('profile.setting')}}">
+                <i class="fas fa-cogs"></i>
+                <span>Settings</span>
+            </a>
+        </li>
     </ul>
 </div>

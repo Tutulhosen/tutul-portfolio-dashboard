@@ -5,6 +5,7 @@ use App\Http\Controllers\AboutMeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileSettingController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SkillController;
 
@@ -83,6 +84,18 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [ContactController::class, 'destroy'])->name('destroy');
 
     });
+
+    Route::get('/profile-setting', [ProfileSettingController::class, 'profile_setting'])->name('profile.setting');
+    Route::post('/update-logo', [ProfileSettingController::class, 'updateLogo'])->name('updateLogo');
+    Route::post('/update-profile-picture', [ProfileSettingController::class, 'updateProfilePicture'])->name('profile.update.picture');
+    Route::post('/update-resume', [ProfileSettingController::class, 'updateResume'])->name('profile.update.resume');
+    Route::post('/update-profile-info', [ProfileSettingController::class, 'updateProfileInfo']);
+    Route::post('/update-media-links', [ProfileSettingController::class, 'updateMediaLinks']);
+    Route::post('/update-password', [ProfileSettingController::class, 'updatePassword']);
+
+
+
+
 
 });
 

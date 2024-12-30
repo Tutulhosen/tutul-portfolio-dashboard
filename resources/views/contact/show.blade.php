@@ -21,7 +21,8 @@
                             <th>Email</th>
                             <th>Subject</th>
                             <th>Message</th>
-                            <th>Actions</th>
+                            <th>Date</th>
+                            {{-- <th>Actions</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -32,7 +33,8 @@
                                 <td>{{ $contact->email }}</td>
                                 <td>{{ $contact->subject }}</td>
                                 <td>{!!Str::limit($contact->message, 50, '...')!!}</td>
-                                <td>
+                                <td>{{ $contact->created_at }}</td>
+                                {{-- <td>
                                     <div class="d-flex gap-2">
                                         <a href="{{ route('contact.edit', $contact->id) }}" class="btn btn-warning btn-sm">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -51,7 +53,7 @@
                                         @csrf
                                         @method('DELETE')
                                     </form>
-                                </td>
+                                </td> --}}
                             </tr>
                         @empty
                             <tr>

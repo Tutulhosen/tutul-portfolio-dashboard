@@ -2,14 +2,41 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Skill;
 use App\Models\AboutMe;
+use App\Models\Contact;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class FrontendDataController extends Controller
 {
+
+    //login
+    public function login(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        // Check if user exists and passwords match
+        $user = User::where('email', $request->email)->first();
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        // Issue token
+        $token = $user->createToken('YourAppName')->plainTextToken;
+
+        // Return response with token
+        return response()->json(['token' => $token]);
+    }
+
+
     // get about me data
     public function about()
     {
@@ -76,6 +103,41 @@ class FrontendDataController extends Controller
             'success' => true,
             'data' => $projects,
         ]);
+    }
+
+
+    //store the contact message data
+    public function contact(Request $request)
+    {
+      
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'nullable|string|max:15',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        Contact::create($validated);
+
+        return response()->json(['message' => 'Your message has been sent successfully!'], 200);
+    }
+
+    //get hero contant
+    public function hero()
+    {
+        // Assuming the user is authenticated
+        $user = auth()->user();
+
+        // Fetch the user with their profile using Eloquent's with() method
+        $userWithProfile = User::with('profile')->find($user->id);
+
+        if (!$userWithProfile) {
+            $userWithProfile=$user;
+        }
+
+        // Return the complete user data including the profile
+        return response()->json($userWithProfile);
     }
 
 
