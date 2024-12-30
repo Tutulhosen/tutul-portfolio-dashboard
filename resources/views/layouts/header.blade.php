@@ -16,7 +16,7 @@
                 {{Auth::user()->name}}
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileMenu">
-                <li><a class="dropdown-item" href="{{route('profile.edit')}}">Settings</a></li>
+                <li><a class="dropdown-item" href="{{route('profile.setting')}}">Settings</a></li>
                 <li><a class="dropdown-item" href="{{route('custom.logout')}}">Logout</a></li>
             </ul>
         </div>

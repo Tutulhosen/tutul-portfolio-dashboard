@@ -2,7 +2,18 @@
 
 @section('main-content')
 <main class="main-content">
-    <h1>Welcome to the Dashboard</h1>
-    <p>This is the main content area where you can manage your portfolio website.</p>
+    <div id='calendar'></div>
 </main>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth'
+    });
+    calendar.render();
+    });
+
+</script>
 @endsection

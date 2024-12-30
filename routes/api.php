@@ -10,8 +10,9 @@ Route::post('/login', [FrontendDataController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::get('/hero', [FrontendDataController::class, 'hero']);
-});
     Route::get('/about', [FrontendDataController::class, 'about']);
     Route::get('/skill', [FrontendDataController::class, 'skill']);
     Route::get('/project', [FrontendDataController::class, 'project']);
-    Route::post('/contact', [FrontendDataController::class, 'contact']);
+});
+Route::post('/contact', [FrontendDataController::class, 'contact']);
+    
