@@ -21,7 +21,8 @@ use App\Http\Controllers\SkillController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+
+    return redirect()->route('dashboard');
 });
 
 Route::get('/dashboard', function () {
