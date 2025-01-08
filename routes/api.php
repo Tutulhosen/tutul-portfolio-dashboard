@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/about', [FrontendDataController::class, 'about']);
     Route::get('/skill', [FrontendDataController::class, 'skill']);
     Route::get('/project', [FrontendDataController::class, 'project']);
+    Route::get('/achievement', [FrontendDataController::class, 'achievement']);
 });
 Route::post('/contact', [FrontendDataController::class, 'contact']);
     

@@ -84,7 +84,7 @@ class SkillController extends Controller
 
         $skill->save();
 
-        return redirect()->route('skill.show')->with('success', 'Skill updated successfully!');
+        return response()->json(['success' => true, 'message' => 'Skill updated successfully!']);
     }
 
 

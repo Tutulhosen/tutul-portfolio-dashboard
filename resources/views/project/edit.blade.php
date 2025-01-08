@@ -101,5 +101,64 @@
             preview.style.display = 'none';
         }
     }
+
+    //update
+    $(document).ready(function () {
+        $('#project-form').on('submit', function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+            const requiredFields = [
+                { field: '#title', name: 'Project Title' },
+                { field: '#description', name: 'Project Description' }
+            ];
+
+            // Validate required fields
+            requiredFields.forEach((item) => {
+                if (!$(item.field).val().trim()) {
+                    isValid = false;
+                    toastr.error(`${item.name} is required.`, 'Validation Error');
+                }
+            });
+
+            if (!isValid) {
+                return; // Stop if validation fails
+            }
+
+            let formData = new FormData(this);
+
+            // Get the form action URL dynamically
+            let actionUrl = $(this).attr('action');
+
+            $.ajax({
+                url: actionUrl, // Use the dynamic URL
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message, 'Success');
+                        setTimeout(() => {
+                            window.location.href = "{{ route('project.show') }}";
+                        }, 2000);
+                    } else {
+                        toastr.error('An unexpected error occurred.', 'Error');
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        let errors = xhr.responseJSON.errors;
+                        for (let error in errors) {
+                            toastr.error(errors[error][0], 'Validation Error');
+                        }
+                    } else {
+                        toastr.error('Failed to update project. Please try again.', 'Error');
+                    }
+                }
+            });
+        });
+    });
 </script>
 @endsection

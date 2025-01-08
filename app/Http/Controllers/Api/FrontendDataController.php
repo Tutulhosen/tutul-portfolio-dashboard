@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Achievement;
 use Illuminate\Support\Facades\Hash;
 
 class FrontendDataController extends Controller
@@ -25,6 +26,7 @@ class FrontendDataController extends Controller
 
         // Check if user exists and passwords match
         $user = User::where('email', $request->email)->first();
+       
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json(['error' => 'Invalid credentials'], 401);
         }
@@ -105,6 +107,29 @@ class FrontendDataController extends Controller
         ]);
     }
 
+    //get achievement data
+    public function achievement(){
+        $achievements = Achievement::latest()->get();
+        if ($achievements->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No achievements found.',
+            ], 404);
+        }
+
+        $achievements->map(function ($achievement) {
+            if ($achievement->attached_file) {
+                $achievement->attached_file = url('storage/' . $achievement->attached_file);
+            }
+            return $achievement;
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $achievements,
+        ]);
+    }
+
 
     //store the contact message data
     public function contact(Request $request)
@@ -127,8 +152,9 @@ class FrontendDataController extends Controller
     public function hero()
     {
         // Assuming the user is authenticated
-        $user = auth()->user();
+        $user=User::where('role', 'admin')->first();
 
+        // dd($user);
         // Fetch the user with their profile using Eloquent's with() method
         $userWithProfile = User::with('profile')->find($user->id);
 

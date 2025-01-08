@@ -124,17 +124,22 @@ class ProfileSettingController extends Controller
         ]);
 
         $user = auth()->user();
+
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
         ]);
 
-        $user->profile->update([
-            'phone' => $request->phone,
-            'whatsapp' => $request->whatsapp,
-            'designation' => $request->designation,
-            'short_description' => $request->short_description,
-        ]);
+        $user->profile()->updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'phone' => $request->phone,
+                'whatsapp' => $request->whatsapp,
+                'designation' => $request->designation,
+                'short_description' => $request->short_description,
+            ]
+        );
+
 
         return response()->json(['message' => 'Profile info updated successfully!']);
     }

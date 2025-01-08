@@ -3,73 +3,50 @@
 @section('main-content')
 <main class="main-content p-3">
     <div class="d-flex justify-content-between align-items-center mt-5">
-        <h2>Add New Project</h2>
-        <a href="{{ route('project.show') }}" class="btn btn-secondary">Back to Projects</a>
+        <h2>Add New Achievement</h2>
+        <a href="{{ route('achievement.show') }}" class="btn btn-secondary">Back to achievements</a>
     </div>
     <br>
 
     <div class="card">
         <div class="card-body">
-            <form id="project-form" action="{{ route('project.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="achievement-form" action="{{ route('achievement.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 
-                <!-- Project Title -->
+                <!-- achievement Title -->
                 <div class="form-group mb-3">
-                    <label for="title" class="form-label">Project Title <span class="text-danger">*</span></label>
-                    <input type="text" name="title" id="title" class="form-control" placeholder="Enter project title">
+                    <label for="title" class="form-label">Achievement Title <span class="text-danger">*</span></label>
+                    <input type="text" name="title" id="title" class="form-control" placeholder="Enter achievement title">
                 </div>
                 
-                <!-- Project Description -->
+                <!-- achievement Description -->
                 <div class="form-group mb-3">
-                    <label for="description" class="form-label">Project Description <span class="text-danger">*</span></label>
-                    <textarea name="description" id="description" rows="5" class="form-control" placeholder="Enter project description"></textarea>
+                    <label for="description" class="form-label">Achievement Description <span class="text-danger">*</span></label>
+                    <textarea name="description" id="description" rows="5" class="form-control" placeholder="Enter achievement description"></textarea>
                 </div>
                 
-                <!-- Project Status -->
-                <div class="form-group mb-3">
-                    <label for="status" class="form-label">Project Status</label>
-                    <select name="status" id="status" class="form-select">
-                        <option value="1">Active</option>
-                        <option value="0" selected>Inactive</option>
-                    </select>
-                </div>
                 
-                <!-- Start Date -->
+                <!-- Awarded Date -->
                 <div class="form-group mb-3">
-                    <label for="start_date" class="form-label">Start Date</label>
-                    <input type="date" name="start_date" id="start_date" class="form-control">
+                    <label for="achieved_at" class="form-label">Awarded Date</label>
+                    <input type="date" name="achieved_at" id="achieved_at" class="form-control">
                 </div>
+
                 
-                <!-- End Date -->
+                <!-- achievement Image -->
                 <div class="form-group mb-3">
-                    <label for="end_date" class="form-label">End Date</label>
-                    <input type="date" name="end_date" id="end_date" class="form-control">
-                </div>
-                
-                <!-- Project Image -->
-                <div class="form-group mb-3">
-                    <label for="image" class="form-label">Project Image</label>
+                    <label for="image" class="form-label">Achievement Attachment</label>
                     <input type="file" name="image" id="image" class="form-control" accept="image/*" onchange="previewImage(event)">
                     <div class="mt-3">
                         <img id="image-preview" src="#" alt="Image Preview" class="img-thumbnail" style="display: none; max-width: 200px; max-height: 200px;">
                     </div>
                 </div>
 
-                <!-- Project Link -->
-                <div class="form-group mb-3">
-                    <label for="link" class="form-label">Server Link</label>
-                    <input type="url" name="link" id="link" class="form-control" placeholder="Enter project link">
-                </div>
-
-                <!-- Github Link -->
-                <div class="form-group mb-3">
-                    <label for="link" class="form-label">Figma Link</label>
-                    <input type="url" name="github_link" id="github_link" class="form-control" placeholder="Enter GitHub link ">
-                </div>
+                
                 
                 <!-- Submit Button -->
                 <div class="d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Save Project</button>
+                    <button type="submit" class="btn btn-primary">Save Achievement</button>
                 </div>
             </form>
         </div>
@@ -102,14 +79,14 @@
 
 <script>
     $(document).ready(function () {
-        $('#project-form').on('submit', function (e) {
+        $('#achievement-form').on('submit', function (e) {
             e.preventDefault();
 
      
             let isValid = true;
             const requiredFields = [
-                { field: '#title', name: 'Project Title' },
-                { field: '#description', name: 'Project Description' }
+                { field: '#title', name: 'achievement Title' },
+                { field: '#description', name: 'achievement Description' }
             ];
 
             requiredFields.forEach((item) => {
@@ -126,7 +103,7 @@
             let formData = new FormData(this);
 
             $.ajax({
-                url: "{{ route('project.store') }}",
+                url: "{{ route('achievement.store') }}",
                 method: "POST",
                 data: formData,
                 processData: false,
@@ -136,7 +113,7 @@
                     if (response.success) {
                         toastr.success(response.message, 'Success');
                         setTimeout(() => {
-                            window.location.href = "{{ route('project.show') }}";
+                            window.location.href = "{{ route('achievement.show') }}";
                         }, 2000);
                     } else {
                         toastr.error('An unexpected error occurred.', 'Error');
@@ -149,7 +126,7 @@
                             toastr.error(errors[error][0], 'Validation Error');
                         }
                     } else {
-                        toastr.error('Failed to save project. Please try again.', 'Error');
+                        toastr.error('Failed to save achievement. Please try again.', 'Error');
                     }
                 }
             });

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutMeController;
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -59,6 +60,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [ProjectController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [ProjectController::class, 'update'])->name('update');
         Route::delete('/{id}', [ProjectController::class, 'destroy'])->name('destroy');
+
+    });
+
+    //Achievement  part
+    Route::prefix('achievement')->name('achievement.')->group(function () {
+        Route::get('/create', [AchievementController::class, 'create'])->name('create');
+        Route::post('/store', [AchievementController::class, 'store'])->name('store');
+        Route::get('/', [AchievementController::class, 'show'])->name('show');
+        Route::post('/status/{id}', [AchievementController::class, 'updateStatus'])->name('status');
+        Route::get('/edit/{id}', [AchievementController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [AchievementController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AchievementController::class, 'destroy'])->name('destroy');
 
     });
 

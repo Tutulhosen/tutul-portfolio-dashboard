@@ -113,9 +113,9 @@ class ProjectController extends Controller
 
             $project->save(); 
 
-            return redirect()->route('project.show')->with('success', 'Project updated successfully!');
+            return response()->json(['success' => true, 'message' => 'Project updated successfully!']);
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to update project.');
+            return response()->json(['success' => false, 'message' => 'Failed to update project.']);
         }
     }
 

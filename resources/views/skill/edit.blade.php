@@ -72,5 +72,57 @@
             }
         });
     });
+
+    //update
+    $(document).ready(function () {
+        $('#skill-form').on('submit', function (e) {
+            e.preventDefault();
+
+            let isValid = true;
+            const requiredFields = [
+                { field: '#title', name: 'Skill Title' },
+            
+            ];
+
+            // Validate required fields
+            requiredFields.forEach((item) => {
+                if (!$(item.field).val().trim()) {
+                    isValid = false;
+                    toastr.error(`${item.name} is required.`, 'Validation Error');
+                }
+            });
+
+            if (!isValid) {
+                return; // Stop if validation fails
+            }
+
+            let formData = new FormData(this);
+
+            // Get the form action URL dynamically
+            let actionUrl = $(this).attr('action');
+
+            $.ajax({
+                url: actionUrl, // Use the dynamic URL
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    console.log(response);
+                    
+                    if (response.success) {
+                        toastr.success(response.message, 'Success');
+                        setTimeout(() => {
+                            window.location.href = "{{ route('skill.show') }}";
+                        }, 2000);
+                    } else {
+                        toastr.error('An unexpected error occurred.', 'Error');
+                    }
+                },
+               
+            });
+        });
+    });
 </script>
 @endsection

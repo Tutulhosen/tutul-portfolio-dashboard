@@ -24,6 +24,12 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="{{route('achievement.show')}}">
+                <i class="fas fa-trophy"></i>
+                <span>Achievement</span>
+            </a>
+        </li>
+        <li class="nav-item">
            
             <a class="nav-link" href="{{route('skill.show')}}">
                 <i class="fas fa-laptop-code"></i>
